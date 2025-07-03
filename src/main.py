@@ -1,16 +1,20 @@
-import os, shutil
+import os, shutil, sys
 from markdown_page import generate_page_recursive
 
 def main():
+    basepath = "/"
+    if(len(sys.argv) > 1):
+        basepath = sys.argv[1]
+    print(basepath)
     copy_static()
-    generate_page_recursive("content", "template.html", "public")
+    generate_page_recursive("content", "template.html", "docs", basepath)
 
 def copy_static():
     try:
-        if os.path.exists("public"):
-            shutil.rmtree("public")
-        os.mkdir("public")
-        copy_dir("", "static", "public")
+        if os.path.exists("docs"):
+            shutil.rmtree("docs")
+        os.mkdir("docs")
+        copy_dir("", "static", "docs")
     except Exception as e:
         print(e)
 
